@@ -61,6 +61,10 @@ button:hover {
 }
 
 .equals {
-    background: #51d6b3;
-    color: #10251f;
+    background: #8131d7;
+    color: #502425;
+}
+
+.equals:hover {
+    background: #df33f5;
 }

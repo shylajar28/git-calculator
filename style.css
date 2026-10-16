@@ -63,14 +63,16 @@ body {
     width: 100%;
     max-width: 360px;
     padding: 28px;
-
-    background: var(--card-bg);
     border: 1px solid var(--border-color);
+    background: var(--card-bg);
     border-radius: 24px;
-
+    border: 2px solid #c5c9db;
     box-shadow: 0 16px 45px var(--shadow-color);
-
     transition: background-color 0.3s, border-color 0.3s;
+}
+
+body.dark-mode .calculator {
+    border-color: var(--border-color);
 }
 
 /* ---------- Header ---------- */
@@ -90,7 +92,7 @@ body {
     align-items: center;
 
     background: var(--accent);
-    color: white;
+    color: #557e67;
     border-radius: 15px;
     font-size: 28px;
 }
@@ -113,16 +115,15 @@ h1 {
 .display-container {
     margin-bottom: 20px;
     padding: 15px;
-
     background: var(--display-bg);
     border: 1px solid var(--border-color);
+    border: 2px solid #c5c9db;
     border-radius: 16px;
 }
 
 .display-label {
     display: block;
     margin-bottom: 10px;
-
     color: var(--muted-color);
     font-size: 10px;
     font-weight: bold;
@@ -191,8 +192,8 @@ button {
 /* Clear button */
 
 .buttons .clear {
-    background: #ffe8eb;
-    color: #c7354c;
+    background: #93b9f1;
+    color: #2e6595;
 }
 
 .buttons .clear:hover {
@@ -211,17 +212,16 @@ button {
 }
 
 /* Equals button */
-
 .buttons .equals {
     background: var(--accent);
-    color: white;
+    color: rgb(127, 180, 230);
     font-size: 25px;
-
-    box-shadow: 0 5px 12px rgba(105, 87, 232, 0.2);
+    box-shadow: 0 5px 12px rgba(121, 113, 186, 0.2);
 }
 
 .buttons .equals:hover {
-    background: #5845d5;
+    background: #8f3496;
+    color: #e8d0ea;
 }
 
 /* Dark mode button colors */
@@ -236,8 +236,8 @@ body.dark-mode .buttons .clear:hover {
 }
 
 body.dark-mode .buttons .operator {
-    background: #403b67;
-    color: #d4ccff;
+    background: #746bbe;
+    color: #f3f1fd;
 }
 
 body.dark-mode .buttons .operator:hover {
@@ -259,7 +259,7 @@ body.dark-mode .buttons .operator:hover {
 
     background: var(--text-color);
     color: var(--card-bg);
-
+    border: 2px solid #d6d1d1;
     border-radius: 30px;
     font-size: 13px;
     font-weight: bold;

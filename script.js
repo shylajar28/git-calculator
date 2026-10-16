@@ -33,3 +33,20 @@ themeToggle.addEventListener("click", function () {
         themeToggle.textContent = "Switch>>Dark Mode";
     }
 });
+
+// ---------- Keyboard support ----------
+
+document.addEventListener("keydown", function (event) {
+    const key = event.key;
+
+    if ("0123456789+-*/.".includes(key)) {
+        addValue(key);
+    } else if (key === "Enter" || key === "=") {
+        event.preventDefault();
+        calculate();
+    } else if (key === "Escape") {
+        clearDisplay();
+    } else if (key === "Backspace") {
+        display.value = display.value.slice(0, -1) || "0";
+    }
+});

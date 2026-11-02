@@ -10,47 +10,101 @@
 
 <body>
 
-    <div class="calculator">
+    <div class="app">
 
-        <header class="calculator-header">
-            <div class="calculator-icon">✳</div>
-            <h1>My Calculator</h1>
-            <p class="subtitle">Simple. Fast. Accurate.</p>
-        </header>
+        <div class="calculator">
 
-        <div class="display-container">
-            <span class="display-label">YOUR CALCULATION</span>
-            <input type="text" id="display" value="0" readonly aria-label="Calculator display">
+            <header class="calculator-header">
+                <div class="calculator-icon">✳</div>
+                <h1>My Calculator</h1>
+                <p class="subtitle">Simple. Fast. Accurate.</p>
+            </header>
+
+            <div class="display-container">
+                <div class="display-top">
+                    <span class="display-label">YOUR CALCULATION</span>
+                    <span id="memoryIndicator" class="memory-indicator" aria-live="polite" hidden></span>
+                </div>
+                <div id="expression" class="expression" aria-hidden="true"></div>
+                <input type="text" id="display" value="0" readonly aria-label="Calculator display" aria-live="polite">
+            </div>
+
+            <!-- Rounding control for long decimals -->
+            <div class="round-row">
+                <label for="decimalPlaces">Round results to</label>
+                <select id="decimalPlaces" aria-label="Decimal places for results">
+                    <option value="auto">Auto (12 digits)</option>
+                    <option value="0">0 decimals</option>
+                    <option value="1">1 decimal</option>
+                    <option value="2">2 decimals</option>
+                    <option value="3">3 decimals</option>
+                    <option value="4">4 decimals</option>
+                    <option value="6">6 decimals</option>
+                    <option value="8">8 decimals</option>
+                </select>
+            </div>
+
+            <!-- Memory keys -->
+            <div class="memory-buttons">
+                <button type="button" onclick="memoryClear()" aria-label="Memory clear">MC</button>
+                <button type="button" onclick="memoryRecall()" aria-label="Memory recall">MR</button>
+                <button type="button" onclick="memoryAdd()" aria-label="Add display to memory">M+</button>
+                <button type="button" onclick="memorySubtract()" aria-label="Subtract display from memory">M−</button>
+                <button type="button" onclick="memoryStore()" aria-label="Memory store">MS</button>
+            </div>
+
+            <div class="buttons">
+                <button type="button" onclick="clearDisplay()" class="clear" aria-label="All clear">AC</button>
+                <button type="button" onclick="backspace()" class="clear" aria-label="Delete last digit">⌫</button>
+                <button type="button" onclick="percent()" class="operator" aria-label="Percent">%</button>
+                <button type="button" onclick="chooseOperator('/')" class="operator" aria-label="Divide">÷</button>
+
+                <button type="button" onclick="square()" class="operator" aria-label="Square">x²</button>
+                <button type="button" onclick="chooseOperator('^')" class="operator" aria-label="Raise to a power">xʸ</button>
+                <button type="button" onclick="squareRoot()" class="operator" aria-label="Square root">√</button>
+                <button type="button" onclick="chooseOperator('*')" class="operator" aria-label="Multiply">×</button>
+
+                <button type="button" onclick="inputDigit('7')" aria-label="7">7</button>
+                <button type="button" onclick="inputDigit('8')" aria-label="8">8</button>
+                <button type="button" onclick="inputDigit('9')" aria-label="9">9</button>
+                <button type="button" onclick="chooseOperator('-')" class="operator" aria-label="Subtract">−</button>
+
+                <button type="button" onclick="inputDigit('4')" aria-label="4">4</button>
+                <button type="button" onclick="inputDigit('5')" aria-label="5">5</button>
+                <button type="button" onclick="inputDigit('6')" aria-label="6">6</button>
+                <button type="button" onclick="chooseOperator('+')" class="operator" aria-label="Add">+</button>
+
+                <button type="button" onclick="inputDigit('1')" aria-label="1">1</button>
+                <button type="button" onclick="inputDigit('2')" aria-label="2">2</button>
+                <button type="button" onclick="inputDigit('3')" aria-label="3">3</button>
+                <button type="button" onclick="calculate()" class="equals" aria-label="Equals">=</button>
+
+                <button type="button" onclick="toggleSign()" class="operator" aria-label="Toggle positive or negative">+/−</button>
+                <button type="button" onclick="inputDigit('0')" aria-label="0">0</button>
+                <button type="button" onclick="inputDecimal()" aria-label="Decimal point">.</button>
+            </div>
+
+            <div class="calculator-footer">
+                <button id="themeToggle" type="button">
+                    Switch to Dark Mode
+                </button>
+                <p>Made for everyday calculations</p>
+            </div>
+
         </div>
 
-        <div class="buttons">
-            <button type="button" onclick="clearDisplay()" class="clear">AC</button>
-            <button type="button" onclick="addValue('7')">7</button>
-            <button type="button" onclick="addValue('8')">8</button>
-            <button type="button" onclick="addValue('9')">9</button>
-
-            <button type="button" onclick="addValue('4')">4</button>
-            <button type="button" onclick="addValue('5')">5</button>
-            <button type="button" onclick="addValue('6')">6</button>
-            <button type="button" onclick="addValue('3')">3</button>
-
-            <button type="button" onclick="addValue('1')">1</button>
-            <button type="button" onclick="addValue('2')">2</button>
-            <button type="button" onclick="addValue('0')">0</button>
-            <button type="button" onclick="addValue('+')" class="operator">+</button>
-
-            <button type="button" onclick="addValue('-')" class="operator">−</button>
-            <button type="button" onclick="addValue('*')" class="operator">×</button>
-            <button type="button" onclick="addValue('/')" class="operator">÷</button>
-            <button type="button" onclick="calculate()" class="equals">=</button>
-        </div>
-
-        <div class="calculator-footer">
-            <button id="themeToggle" type="button">
-                Switch to Dark Mode
-            </button>
-            <p>Made for everyday calculations</p>
-        </div>
+        <!-- History panel: sidebar on desktop, collapsible section on narrow screens -->
+        <aside class="history-panel" id="historyPanel" aria-label="Calculation history">
+            <div class="history-header">
+                <h2>History</h2>
+                <button type="button" id="historyToggle" class="history-toggle" aria-expanded="false"
+                    aria-controls="historyBody" aria-label="Show or hide history">Show</button>
+            </div>
+            <div class="history-body" id="historyBody">
+                <ul id="historyList" class="history-list"></ul>
+                <button type="button" id="clearHistory" class="history-clear" aria-label="Clear history">Clear History</button>
+            </div>
+        </aside>
 
     </div>
 
